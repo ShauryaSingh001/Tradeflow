@@ -1,0 +1,12 @@
+# C++ Compiled Binaries
+*.exe
+*.out
+*.o
+
+# Node.js & React Dependencies
+node_modules/
+dist/
+.env
+
+# OS Files
+.DS_Store
