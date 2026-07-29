@@ -39,10 +39,9 @@ export default function App() {
     const [trades, setTrades] = useState([]);
     const wsRef = useRef(null);
     
-    const userBalance = 1000000.00; // Static for prototype
+    const userBalance = 1000000.00; 
 
     useEffect(() => {
-        // Connect directly to your Node.js Switchboard
         wsRef.current = new WebSocket('ws://localhost:8080');
 
         wsRef.current.onopen = () => console.log('Connected to Node.js Switchboard');
@@ -51,7 +50,6 @@ export default function App() {
             const data = JSON.parse(event.data);
             
             if (data.type === 'TRADE_EXECUTED') {
-                // Flash the new price and add it to the trade log
                 setLastPrice(data.price);
                 setTrades(prev => [`${data.buyer} bought ${data.qty} @ ₹${data.price} from ${data.seller}`, ...prev].slice(0, 10));
             } else if (data.type === 'ERROR') {
@@ -64,7 +62,6 @@ export default function App() {
 
     const handlePlaceOrder = (orderData) => {
         if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
-            // Send the JSON order over the WebSocket to Node.js
             wsRef.current.send(JSON.stringify(orderData));
         } else {
             alert("Not connected to server!");
